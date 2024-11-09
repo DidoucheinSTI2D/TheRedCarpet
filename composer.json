@@ -1,0 +1,11 @@
+{
+    "name": "didou/the-red-carpet",
+    "autoload": {
+        "psr-4": {
+            "Didou\\TheRedCarpet\\": "src/"
+        }
+    },
+    "require": {
+        "vlucas/phpdotenv": "^5.6"
+    }
+}
