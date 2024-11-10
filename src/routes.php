@@ -3,11 +3,14 @@
 $requestRoute = $_SERVER['REQUEST_URI'];
 $requestRoute = parse_url($requestRoute, PHP_URL_PATH);
 
-$templatePath = __DIR__ . '/../templates';
+function routeName($name){
+    $templatePath = __DIR__ . '/../templates';
+    return $templatePath . '/' . $name . '/'. $name . '.html.php';
+}
 
 switch($requestRoute) {
     case '/':
-        require_once $templatePath . '/homepage.html.php';
+        require_once routeName('homepage');
         break;
     case '/test':
         echo '<h1>TestRoute</h1>';
