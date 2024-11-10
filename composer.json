@@ -2,7 +2,7 @@
     "name": "didou/the-red-carpet",
     "autoload": {
         "psr-4": {
-            "Didou\\TheRedCarpet\\": "src/"
+            "App\\": "src/"
         }
     },
     "require": {

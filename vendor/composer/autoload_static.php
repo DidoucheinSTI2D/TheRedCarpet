@@ -30,7 +30,10 @@ class ComposerStaticInitc9ff3d8da735fbbe94f6b37c0cf65358
         'D' => 
         array (
             'Dotenv\\' => 7,
-            'Didou\\TheRedCarpet\\' => 19,
+        ),
+        'A' => 
+        array (
+            'App\\' => 4,
         ),
     );
 
@@ -59,7 +62,7 @@ class ComposerStaticInitc9ff3d8da735fbbe94f6b37c0cf65358
         array (
             0 => __DIR__ . '/..' . '/vlucas/phpdotenv/src',
         ),
-        'Didou\\TheRedCarpet\\' => 
+        'App\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src',
         ),
