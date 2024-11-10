@@ -1,0 +1,9 @@
+CREATE DATABASE TheRedCarpet;
+
+USE TheRedCarpet;
+
+CREATE TABLE USER (
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(20) NOT NULL,
+    password VARCHAR(30) NOT NULL
+);

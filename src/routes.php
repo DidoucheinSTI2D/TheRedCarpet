@@ -8,12 +8,20 @@ function routeName($name){
     return $templatePath . '/' . $name . '/'. $name . '.html.php';
 }
 
+function getScript($name){
+    $scriptPath = __DIR__ . '/../public/';
+    return $scriptPath . '/' . $name . '.php';
+}
+
 switch($requestRoute) {
     case '/':
         require_once routeName('homepage');
         break;
     case '/test':
         echo '<h1>TestRoute</h1>';
+        break;
+    case '/register':
+        require_once getScript('register');
         break;
     default:
         http_response_code(404);

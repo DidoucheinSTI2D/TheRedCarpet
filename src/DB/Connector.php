@@ -1,6 +1,6 @@
 <?php 
 
-namespace DB;
+namespace App\DB;
 
 use Dotenv\Dotenv;
 
@@ -15,7 +15,11 @@ class Connector {
         $host = $_ENV['DB_HOST'];
         $dbname = $_ENV['DB_NAME'];
 
+        $this->pdo = new \PDO("mysql:host=$host;dbname=$dbname", $_ENV['DB_USER'], '');
+    
+    }
 
-        $this->pdo = new \PDO('mysql:host=$host;dbname=$dbname', $_ENV['DB_USER'], $_ENV['DB_PASSWORD']);
+    public function getPdo(): \PDO {
+        return $this->pdo;
     }
 }
