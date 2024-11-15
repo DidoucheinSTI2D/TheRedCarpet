@@ -1,3 +1,4 @@
+DROP DATABASE IF EXISTS TheRedCarpet;
 CREATE DATABASE TheRedCarpet;
 
 USE TheRedCarpet;
