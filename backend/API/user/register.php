@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../../vendor/autoload.php';
+require_once __DIR__ . '/../../../vendor/autoload.php';
 
 use App\Entity\User;
 use App\DB\Connector;
@@ -18,13 +18,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = json_decode(file_get_contents("php://input"), true);
 
-    if (isset($data['username']) && isset($data['password'])) {
+    if (isset($data['username']) && isset($data['password']) &&  isset($data['email']) && isset($data['birthdate']) && isset($data['first_name']) && isset($data['last_name'])) {
         $connector = new Connector();
         $pdo = $connector->getPdo();
 
         $user = new User($pdo);
         $user->setUsername($data['username']);
         $user->setPassword(password_hash($data['password'], PASSWORD_DEFAULT));
+        $user->setEmail($data['email']);
+        $user->setBirthdate($data['birthdate']);
+        $user->setFirstName($data['first_name']);
+        $user->setLastName($data['last_name']);
 
         try {
             $user->save($pdo);
