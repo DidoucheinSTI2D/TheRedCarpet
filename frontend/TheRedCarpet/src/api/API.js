@@ -1,15 +1,19 @@
 export const getRegister = async (username, password) => {
   try {
-    const response = await fetch("http://trc.local/api/register.php", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username: username,
-        password: password,
-      }),
-    });
+    const apiHost = import.meta.env.VITE_API_HOST || "http://localhost:8888";
+    const response = await fetch(
+      `${apiHost}/TheRedCarpet/backend/API/register.php`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: username,
+          password: password,
+        }),
+      }
+    );
 
     const data = await response.json();
 
