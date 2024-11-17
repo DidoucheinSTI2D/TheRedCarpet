@@ -1,39 +1,17 @@
-import React, { useState } from 'react';
+import { useState } from "react";
+import { getRegister } from "@api/API.js";
 
 function Register() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [message, setMessage] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
   const [error, setError] = useState(false);
 
   const handleRegister = async (e) => {
     e.preventDefault();
-
-    try {
-      const response = await fetch('http://trc.local/api/register.php', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          username: username,
-          password: password,
-        }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        setMessage(data.message);
-        setError(false);
-      } else {
-        setMessage(data.message || 'An error occurred.');
-        setError(true);
-      }
-    } catch (err) {
-      setMessage('Failed to connect to the server.');
-      setError(true);
-    }
+    const result = await getRegister(username, password);
+    setMessage(result.message);
+    setError(result.error);
   };
 
   return (
@@ -47,6 +25,7 @@ function Register() {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
+            placeholder="Username"
           />
         </div>
         <div>
@@ -56,13 +35,12 @@ function Register() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            placeholder="Password"
           />
         </div>
         <button type="submit">Register</button>
       </form>
-      {message && (
-        <p style={{ color: error ? 'red' : 'green' }}>{message}</p>
-      )}
+      {message && <p style={{ color: error ? "red" : "green" }}>{message}</p>}
     </div>
   );
 }
