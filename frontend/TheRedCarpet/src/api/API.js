@@ -1,6 +1,6 @@
 export const getRegister = async (username, password, email, birthdate, first_name, last_name) => {
   try {
-    const apiHost = import.meta.env.VITE_API_HOST || "http://localhost:8888/TheCarpet/Backend/";
+    const apiHost = import.meta.env.VITE_API_HOST || "http://localhost:8888/TheRedCarpet/Backend/";
     const response = await fetch(
       `${apiHost}/API/user/register.php`,
       {
