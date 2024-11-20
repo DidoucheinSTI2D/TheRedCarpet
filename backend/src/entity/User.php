@@ -116,7 +116,7 @@ class User {
     }
 
 
-    public function update(\PDO $pdo): void{
+    public function update(\PDO $pdo, int $id): void{
         $sql = 'UPDATE SUBSCRIBER SET username = :username, password = :password, email = :email, birthdate = :birthdate, first_name = :first_name, last_name WHERE id = '{$id};
         $stmt = $pdo ->prepare($sql);
         $stmt->bindParam(':username', $this->username);

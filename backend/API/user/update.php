@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $user->setLastName($data['last_name']);
 
         try {
-            $user->update($pdo);
+            $user->update($pdo, $data['id']);
 
             echo json_encode([
                 "status" => "success",
