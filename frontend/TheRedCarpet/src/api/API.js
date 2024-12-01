@@ -1,8 +1,8 @@
-export const getRegister = async (username, password) => {
+export const getRegister = async (username, password, email, birthdate, first_name, last_name) => {
   try {
-    const apiHost = import.meta.env.VITE_API_HOST || "http://localhost:8888";
+    const apiHost = import.meta.env.VITE_API_HOST || "http://localhost:8888/TheRedCarpet/Backend/";
     const response = await fetch(
-      `${apiHost}/TheRedCarpet/backend/API/register.php`,
+      `${apiHost}/API/user/register.php`,
       {
         method: "POST",
         headers: {
@@ -11,6 +11,10 @@ export const getRegister = async (username, password) => {
         body: JSON.stringify({
           username: username,
           password: password,
+          email: email,
+          birthdate: birthdate,
+          first_name: first_name,
+          last_name: last_name,
         }),
       }
     );
