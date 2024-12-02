@@ -6,14 +6,14 @@ use App\Entity\User;
 use App\DB\Connector;
 
 header("Access-Control-Allow-Origin: http://localhost:5173");
-header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PATCH");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 header("Content-Type: application/json; charset=UTF-8");
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'PATCH') {
     $data = json_decode(file_get_contents("php://input"), true);
 
-    if (isset($data['username']) && isset($data['password']) &&  isset($data['email']) && isset($data['birthdate']) && isset($data['first_name']) && isset($data['last_name'])) {
+    if (isset($data['username']) &&  isset($data['email']) && isset($data['birthdate'])) {
         $connector = new Connector();
         $pdo = $connector->getPdo();
 

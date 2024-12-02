@@ -116,14 +116,14 @@ class User {
     }
 
 
-    public function update(\PDO $pdo, int $id): void{
-        $sql = 'UPDATE SUBSCRIBER SET username = :username, password = :password, email = :email, birthdate = :birthdate, first_name = :first_name, last_name WHERE id = '{$id};
-        $stmt = $pdo ->prepare($sql);
-        $stmt->bindParam(':username', $this->username);
-        $stmt->bindParam(':password', $this->password);
-        $stmt->bindParam(':email', $this->email);
-        $stmt->bindParam(':first_name', $this->first_name);
-        $stmt->bindParam(':last_name', $this->last_name);
-        $stmt->execute();
+    public function update(\PDO $pdo, int $id, string $password): void{
+        if (login($pdo, $_SESSION['user_id'], $password)){
+            $sql = 'UPDATE SUBSCRIBER SET username = :username, email = :email, birthdate = :birthdate, WHERE username = '{$username};
+            $stmt = $pdo ->prepare($sql);
+            $stmt->bindParam(':username', $this->username);
+            $stmt->bindParam(':email', $this->email);
+            $stmt->bindParam(':birthdate', $this->birthdate);
+            $stmt->execute();
+        }
     }
 }
