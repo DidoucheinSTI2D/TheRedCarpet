@@ -108,5 +108,22 @@ class User {
         return false;
     }
     
-    
+    public function delete(\PDO $pdo, string $username): void{
+        $sql = 'DELETE FROM SUBSCRIBER WHERE username  = :username';
+        $stmt = $pdo ->prepare($sql);
+        $stmt->bindParam(':username',$username);
+        $stmt->execute();
+    }
+
+
+    public function update(\PDO $pdo, int $id, string $password): void{
+        if (login($pdo, $_SESSION['user_id'], $password)){
+            $sql = 'UPDATE SUBSCRIBER SET username = :username, email = :email, birthdate = :birthdate, WHERE username = '{$username};
+            $stmt = $pdo ->prepare($sql);
+            $stmt->bindParam(':username', $this->username);
+            $stmt->bindParam(':email', $this->email);
+            $stmt->bindParam(':birthdate', $this->birthdate);
+            $stmt->execute();
+        }
+    }
 }
