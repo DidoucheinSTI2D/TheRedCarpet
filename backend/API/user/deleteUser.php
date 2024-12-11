@@ -6,7 +6,7 @@ use App\Entity\User;
 use App\DB\Connector;
 
 header("Access-Control-Allow-Origin: http://localhost:5173");
-header("Access-Control-Allow-Methods: GET, POST, OPTIONS, DELETE");
+header("Access-Control-Allow-Methods: DELETE");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 header("Content-Type: application/json; charset=UTF-8");
 
@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
             $user->delete($pdo, $data['id']);
             echo json_encode([
                 "status" => "success",
-                "message" => "User registered successfully."
+                "message" => "User deleted successfully."
             ]);
         } catch (Exception $e) {
             http_response_code(500);
