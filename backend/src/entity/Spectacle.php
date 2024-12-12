@@ -2,10 +2,11 @@
 
 namespace App\Entity;
 
-class Spectacle {
+class Spectacle
+{
     private $id;
     private $title;
-    private $sypnosis;
+    private $synopsis;
     private $duration;
     private $price;
     private $language;
@@ -22,7 +23,7 @@ class Spectacle {
     {
         return $this->id;
     }
-    
+
     public function getTitle(): string
     {
         return $this->title;
@@ -33,14 +34,14 @@ class Spectacle {
         $this->title = $title;
     }
 
-    public function getSypnosis(): string
+    public function getsynopsis(): string
     {
-        return $this->sypnosis;
+        return $this->synopsis;
     }
 
-    public function setSypnosis(string $sypnosis): void
+    public function setsynopsis(string $synopsis): void
     {
-        $this->sypnosis = $sypnosis;
+        $this->synopsis = $synopsis;
     }
 
     public function getDuration(): string
@@ -90,16 +91,25 @@ class Spectacle {
 
     public function save(\PDO $pdo): void
     {
-        $sql = "INSERT INTO spectacle (title, sypnosis, duration, price, language, category_id) VALUES (:title, :sypnosis, :duration, :price, :language, :category_id)";
+        $sql = "INSERT INTO spectacle (title, synopsis, duration, price, language, category_id) VALUES (:title, :synopsis, :duration, :price, :language, :category_id)";
         $stmt = $pdo->prepare($sql);
-        $stmt -> bindParam(':title', $this->title, \PDO::PARAM_STR);
-        $stmt -> bindParam(':sypnosis', $this->sypnosis, \PDO::PARAM_STR);
-        $stmt -> bindParam(':duration', $this->duration, \PDO::PARAM_STR);
-        $stmt -> bindParam(':price', $this->price, \PDO::PARAM_STR);
-        $stmt -> bindParam(':language', $this->language, \PDO::PARAM_STR);
-        $stmt -> bindParam(':category_id', $this->category_id, \PDO::PARAM_INT);
+        $stmt->bindParam(':title', $this->title, \PDO::PARAM_STR);
+        $stmt->bindParam(':synopsis', $this->synopsis, \PDO::PARAM_STR);
+        $stmt->bindParam(':duration', $this->duration, \PDO::PARAM_STR);
+        $stmt->bindParam(':price', $this->price, \PDO::PARAM_STR);
+        $stmt->bindParam(':language', $this->language, \PDO::PARAM_STR);
+        $stmt->bindParam(':category_id', $this->category_id, \PDO::PARAM_INT);
         $stmt->execute();
 
         $this->id = $pdo->lastInsertId();
     }
+
+    public function delete(\PDO $pdo, int $id): void
+    {
+        $sql = 'DELETE FROM SPECTACLE WHERE id = :id';
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+    }
+
 }

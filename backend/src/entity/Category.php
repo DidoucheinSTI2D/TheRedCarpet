@@ -2,7 +2,8 @@
 
 namespace App\Entity;
 
-class Category{
+class Category
+{
     private $id;
     private $name;
     private $helpText;
@@ -48,9 +49,9 @@ class Category{
     {
         $sql = "INSERT INTO category (name, helpText) VALUES (:name, :helpText)";
         $stmt = $pdo->prepare($sql);
-        $stmt -> bindParam(':name', $this->name);
-        $stmt -> bindParam(':helpText', $this->helpText);
-        $stmt -> execute();
+        $stmt->bindParam(':name', $this->name);
+        $stmt->bindParam(':helpText', $this->helpText);
+        $stmt->execute();
 
         $this->id = $pdo->lastInsertId();
     }
@@ -59,8 +60,15 @@ class Category{
     {
         $sql = "DELETE FROM category WHERE id = :id";
         $stmt = $pdo->prepare($sql);
-        $stmt -> bindParam(':id', $this->id);
-        $stmt -> execute();
+        $stmt->bindParam(':id', $this->id);
+        $stmt->execute();
+
+
+        /*/
+                Entity/Category.php : 
+
+                Pour le delete : faire en sorte que lors de la suppression d'une catégorie, on supprime la/les categories aussi dans le category_id des spectacles
+        */
     }
 
     public function getById($id): ?array
@@ -74,20 +82,20 @@ class Category{
     }
 
     public function update(\PDO $pdo, array $updates): void
-{
-    $fields = [];
-    $params = [':id' => $this->id];
+    {
+        $fields = [];
+        $params = [':id' => $this->id];
 
-    foreach ($updates as $column => $value) {
-        $fields[] = "$column = :$column";
-        $params[":$column"] = $value;
-    }
+        foreach ($updates as $column => $value) {
+            $fields[] = "$column = :$column";
+            $params[":$column"] = $value;
+        }
 
-    $sql = "UPDATE category SET " . implode(', ', $fields) . " WHERE id = :id";
-    $stmt = $pdo->prepare($sql);
-    foreach ($params as $key => $value) {
-        $stmt->bindValue($key, $value);
+        $sql = "UPDATE category SET " . implode(', ', $fields) . " WHERE id = :id";
+        $stmt = $pdo->prepare($sql);
+        foreach ($params as $key => $value) {
+            $stmt->bindValue($key, $value);
+        }
+        $stmt->execute();
     }
-    $stmt->execute();
-}
 }

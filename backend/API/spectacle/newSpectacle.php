@@ -2,7 +2,7 @@
 
 require_once __DIR__ . '/../../../vendor/autoload.php';
 
-use App\Entity\Category;
+use App\Entity\Spectacle;
 use App\DB\Connector;
 
 header("Access-Control-Allow-Origin: http://localhost:5173");
@@ -18,33 +18,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = json_decode(file_get_contents("php://input"), true);
 
-    if (isset($data['name']) && isset($data['helpText'])) {
+    if (
+        isset($data['title']) &&
+        isset($data['synopsis']) &&
+        isset($data['duration']) &&
+        isset($data['price']) &&
+        isset($data['language']) &&
+        isset($data['category_id'])
+    ) {
         $connector = new Connector();
         $pdo = $connector->getPdo();
 
-        $category = new Category($pdo);
-        $category->setName($data['name']);
-        $category->setHelpText($data['helpText']);
+        $spectacle = new Spectacle($pdo);
+        $spectacle->setTitle($data['title']);
+        $spectacle->setsynopsis($data['synopsis']);
+        $spectacle->setDuration($data['duration']);
+        $spectacle->setPrice($data['price']);
+        $spectacle->setLanguage($data['language']);
+        $spectacle->setCategory_Id($data['category_id']);  // Modification ici
 
         try {
-            $category->save($pdo);
+            $spectacle->save($pdo);
 
             echo json_encode([
                 "status" => "success",
-                "message" => "Category created successfully."
+                "message" => "Spectacle created successfully."
             ]);
         } catch (Exception $e) {
             http_response_code(500);
             echo json_encode([
                 "status" => "error",
-                "message" => "Failed to create category: " . $e->getMessage()
+                "message" => "Failed to create spectacle: " . $e->getMessage()
             ]);
         }
     } else {
         http_response_code(400);
         echo json_encode([
             "status" => "error",
-            "message" => "Name and help text are required."
+            "message" => "All fields (title, synopsis, duration, price, language, category_id) are required."
         ]);
     }
 } else {
