@@ -5,7 +5,7 @@ namespace App\Entity;
 class Spectacle {
     private $id;
     private $title;
-    private $sypnosis;
+    private $synopsis;
     private $duration;
     private $price;
     private $language;
@@ -22,6 +22,11 @@ class Spectacle {
     {
         return $this->id;
     }
+
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
     
     public function getTitle(): string
     {
@@ -33,14 +38,14 @@ class Spectacle {
         $this->title = $title;
     }
 
-    public function getSypnosis(): string
+    public function getSynopsis(): string
     {
-        return $this->sypnosis;
+        return $this->synopsis;
     }
 
-    public function setSypnosis(string $sypnosis): void
+    public function setSynopsis(string $synopsis): void
     {
-        $this->sypnosis = $sypnosis;
+        $this->synopsis = $synopsis;
     }
 
     public function getDuration(): string
@@ -90,10 +95,10 @@ class Spectacle {
 
     public function save(\PDO $pdo): void
     {
-        $sql = "INSERT INTO spectacle (title, sypnosis, duration, price, language, category_id) VALUES (:title, :sypnosis, :duration, :price, :language, :category_id)";
+        $sql = "INSERT INTO spectacle (title, synopsis, duration, price, language, category_id) VALUES (:title, :synopsis, :duration, :price, :language, :category_id)";
         $stmt = $pdo->prepare($sql);
         $stmt -> bindParam(':title', $this->title, \PDO::PARAM_STR);
-        $stmt -> bindParam(':sypnosis', $this->sypnosis, \PDO::PARAM_STR);
+        $stmt -> bindParam(':synopsis', $this->synopsis, \PDO::PARAM_STR);
         $stmt -> bindParam(':duration', $this->duration, \PDO::PARAM_STR);
         $stmt -> bindParam(':price', $this->price, \PDO::PARAM_STR);
         $stmt -> bindParam(':language', $this->language, \PDO::PARAM_STR);
@@ -101,5 +106,22 @@ class Spectacle {
         $stmt->execute();
 
         $this->id = $pdo->lastInsertId();
+    }
+    
+    public function delete(\PDO $pdo): void
+    {
+        $sql = "DELETE FROM spectacle WHERE id = :id";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':id', $this->id, \PDO::PARAM_INT);
+        $stmt->execute();
+    }
+
+    public function getSpectacleByFilter(\PDO $pdo, $filter): array
+    {
+        $sql = "SELECT * FROM spectacle WHERE title LIKE :filter OR synopsis LIKE :filter OR duration LIKE :filter OR price LIKE :filter OR language LIKE :filter OR category_id LIKE :filter";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':filter', $filter, \PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 }
