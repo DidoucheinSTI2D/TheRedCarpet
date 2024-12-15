@@ -3,6 +3,21 @@ import React from 'react';
 import { useEffect, useRef, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import Post from "../Post/Post"
+import { getOngoingRepresentations } from "@/api/API";
+
+
+const fetchRepresentations = async () => {
+    const result = await getOngoingRepresentations();
+
+    if (!result.error) {
+        console.log("Ongoing Representations:", result.data);
+    } else {
+        console.error("Error fetching representations:", result.message);
+    }
+    console.log(result)
+
+};
+
 
 const people = [
     { name: "John Doe", description: "Test", likes: 12 },
