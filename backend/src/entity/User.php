@@ -108,12 +108,19 @@ class User {
         return false;
     }
     
-    public function delete(\PDO $pdo, int $id): void{
-        $sql = 'DELETE FROM SUBSCRIBER WHERE id  = :id';
-        $stmt = $pdo ->prepare($sql);
-        $stmt->bindParam(':id', $id);
-        $stmt->execute();
+    public function delete(\PDO $pdo, int $id): void
+    {
+        $sqlDeleteSchedule = 'DELETE FROM schedule WHERE subscriber_id = :id';
+        $stmtSchedule = $pdo->prepare($sqlDeleteSchedule);
+        $stmtSchedule->bindParam(':id', $id, \PDO::PARAM_INT);
+        $stmtSchedule->execute();
+
+        $sqlDeleteUser = 'DELETE FROM SUBSCRIBER WHERE id = :id';
+        $stmtUser = $pdo->prepare($sqlDeleteUser);
+        $stmtUser->bindParam(':id', $id, \PDO::PARAM_INT);
+        $stmtUser->execute();
     }
+    
 
 
     public function update(\PDO $pdo, int $id): void{

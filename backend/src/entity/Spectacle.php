@@ -141,4 +141,52 @@ class Spectacle {
         $stmt->execute();
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
+
+    public function countSpectaclesByCategory(): array
+    {
+        $sql = "SELECT category_id, COUNT(*) AS count
+                FROM spectacle
+                GROUP BY category_id";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    public function findOngoingSpectaclesByCategory(int $categoryId): array
+    {
+        $sql = "
+            SELECT DISTINCT s.*
+            FROM spectacle s
+            JOIN representation r ON s.id = r.spectacle_id
+            WHERE s.category_id = :category_id
+            AND r.first_date <= NOW()
+            AND r.last_date >= NOW()
+        ";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindParam(':category_id', $categoryId, \PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    public function findSpectaclesByBorough(): array
+    {
+        $sql = "
+            SELECT DISTINCT s.*, t.borough
+            FROM spectacle s
+            JOIN representation r ON s.id = r.spectacle_id
+            JOIN room ro ON ro.id = r.room_id
+            JOIN theatre t ON ro.theater_id = t.id
+            WHERE r.first_date <= NOW()
+              AND r.last_date >= NOW()
+        ";
+    
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+    
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }    
 }

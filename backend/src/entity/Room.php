@@ -74,4 +74,19 @@ class Room {
         $stmt -> bindParam(':id', $this->id);
         $stmt -> execute();
     }
+
+    public function findRoomByBorough(string $borough): array
+    {
+        $sql = "SELECT room.id, room.name, room.gauge, room.theater_id
+                FROM room
+                JOIN theatre ON room.theater_id = theatre.id
+                WHERE theatre.borough = :borough";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindParam(':borough', $borough, \PDO::PARAM_STR);
+        $stmt->execute();
+
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
 }
