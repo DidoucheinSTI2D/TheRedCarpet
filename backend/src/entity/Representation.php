@@ -92,5 +92,29 @@ class Representation {
         $stmt->execute();
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
+
+    public function getFullyBookedPastShows(): array
+    {
+        $sql = "
+            SELECT 
+                r.spectacle_id, 
+                s.title AS spectacle_title,
+                ro.name AS room_name,
+                ro.gauge AS room_gauge,
+                COUNT(sc.id) AS total_booked
+            FROM representation r
+            JOIN room ro ON r.room_id = ro.id
+            JOIN schedule sc ON r.spectacle_id = sc.spectacle_id
+            JOIN spectacle s ON r.spectacle_id = s.id
+            WHERE r.last_date < NOW() -- Spectacles terminés
+            GROUP BY r.spectacle_id, s.title, ro.name, ro.gauge
+            HAVING total_booked >= ro.gauge -- Affiché complet
+        ";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
     
 }
