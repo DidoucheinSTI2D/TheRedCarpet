@@ -74,4 +74,13 @@ class Artist {
         $stmt -> bindParam(':id', $this->id);
         $stmt -> execute();
     }
+    
+    function getArtistsWithThreeRoles(): array {
+        $sql = " SELECT r.artist_id, COUNT(DISTINCT r.role) AS role_count FROM role r GROUP BY r.artist_id HAVING COUNT(DISTINCT r.role) >= 3;";
+    
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+    
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
 }
