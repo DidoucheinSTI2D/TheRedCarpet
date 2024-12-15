@@ -74,4 +74,26 @@ class Artist {
         $stmt -> bindParam(':id', $this->id);
         $stmt -> execute();
     }
+
+
+    public function ArtistInCommon(\PDO $pdo, string $entree)
+    {
+        $sql = "SELECT artist.firstName AS firstName_1, 
+                       artist_2.firstName AS firstName_2, 
+                        COUNT(DISTINCT role.spectacle_id) AS common_spectacles
+                    FROM role JOIN role AS role_2 
+                        ON role.spectacle_id = role_2.spectacle_id 
+                        AND role.artist_id <> role_2.artist_id  -- Différents artistes dans le même spectacle
+                    JOIN artist ON role.artist_id = artist.ID  -- Premier artiste
+                    JOIN artist AS artist_2 ON role_2.artist_id = artist_2.ID  -- Deuxième artiste
+                        WHERE artist.firstName LIKE '$entree'
+                        OR   artist.lastName LIKE '$entree'-- Prénom de l'artiste donné
+                    GROUP BY artist.firstName, artist_2.firstName
+                    HAVING COUNT(DISTINCT role.spectacle_id) >= 2";
+
+        $stmt = $pdo->prepare($sql);
+        $stmt -> execute();   
+
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
 }
