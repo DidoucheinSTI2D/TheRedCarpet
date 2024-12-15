@@ -91,7 +91,8 @@ class Artist {
                     HAVING COUNT(DISTINCT role.spectacle_id) >= 2";
 
         $stmt = $pdo->prepare($sql);
-        $stmt -> execute();   
+        $stmt -> execute();
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);   
 
     }
   
