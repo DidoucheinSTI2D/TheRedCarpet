@@ -76,4 +76,21 @@ class Representation {
         $stmt -> bindParam(':room_id', $this->room_id);
         $stmt -> execute();
     }
+
+    public function getOnGoingRepresentations(): array
+    {
+        $sql = "
+            SELECT 
+                representation.*, 
+                spectacle.title AS spectacle_title, 
+                spectacle.synopsis AS spectacle_synopsis
+            FROM representation
+            JOIN spectacle ON representation.spectacle_id = spectacle.id
+            WHERE representation.first_date <= NOW() AND representation.last_date >= NOW()
+        ";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+    
 }
