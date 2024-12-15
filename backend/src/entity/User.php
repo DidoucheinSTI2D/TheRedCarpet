@@ -125,4 +125,27 @@ class User {
         $stmt->bindParam(':birthdate', $this->birthdate);
         $stmt->execute();
     }
+
+    public function updatePassword(int $id, string $oldPassword, string $newPassword): bool
+    {
+        $sqlFetch = 'SELECT password FROM SUBSCRIBER WHERE id = :id';
+        $stmtFetch = $this->pdo->prepare($sqlFetch);
+        $stmtFetch->bindParam(':id', $id, \PDO::PARAM_INT);
+        $stmtFetch->execute();
+        $user = $stmtFetch->fetch(\PDO::FETCH_ASSOC);
+
+        if (!$user || !password_verify($oldPassword, $user['password'])) {
+            return false;
+        }
+
+        $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+
+        $sqlUpdate = 'UPDATE SUBSCRIBER SET password = :password WHERE id = :id';
+        $stmtUpdate = $this->pdo->prepare($sqlUpdate);
+        $stmtUpdate->bindParam(':password', $hashedPassword, \PDO::PARAM_STR);
+        $stmtUpdate->bindParam(':id', $id, \PDO::PARAM_INT);
+
+        return $stmtUpdate->execute();
+    }
+
 }
