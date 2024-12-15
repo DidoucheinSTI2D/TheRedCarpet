@@ -193,12 +193,12 @@ class Spectacle {
     public function TopThreeSpectacle(\PDO $pdo)
     {
 
-        $sql = "SELECT c_category.name AS category_name, 
-                SUM(c_schedule.booked) AS total_reserved_seats
-                    FROM c_schedule, c_spectacle, c_category
-                    WHERE c_schedule.spectacle_id = c_spectacle.ID 
-                        AND c_spectacle.category_id = c_category.ID
-                    GROUP BY c_category.name
+        $sql = "SELECT category.name AS category_name, 
+                SUM(schedule.booked) AS total_reserved_seats
+                    FROM schedule, spectacle, category
+                    WHERE schedule.spectacle_id = spectacle.ID 
+                        AND spectacle.category_id = category.ID
+                    GROUP BY category.name
                     ORDER BY total_reserved_seats DESC
                     LIMIT 3";
 
