@@ -143,4 +143,37 @@ class Theatre{
         $stmt -> bindParam(':id', $this->id);
         $stmt -> execute();
     }
+
+
+    public function ScenaristPerTheater(\PDO $pdo, string $theater)
+    {
+        $sql = "SELECT DISTINCT c_artist.firstName, c_artist.lastName, c_theatre.name AS theatre_name
+                        FROM c_role, c_artist, c_spectacle, c_representation, c_room, c_theatre
+                        WHERE role.artist_id = c_artist.ID 
+                            AND role.spectacle_id = c_spectacle.ID
+                            AND c_spectacle.ID = c_representation.spectacle_id 
+                            AND c_representation.room_id = c_room.ID 
+                            AND c_room.theater_id = c_theatre.ID
+                            AND role.role = 'metteur en scène' 
+                            AND c_theatre.name = '$theater'";
+        $stmt = $pdo->prepare($sql);
+        $stmt -> execute();
+        
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    
+    public function RecepyPerSpectacle(\PDO $pdo)
+    {
+        $sql = "SELECT c_spectacle.name AS spectacle_name, 
+                SUM(c_schedule.booked * c_schedule.price) AS recettes
+                    FROM c_schedule, c_spectacle
+                    WHERE c_schedule.spectacle_id = c_spectacle.ID
+                    GROUP BY c_spectacle.name
+                    ORDER BY recettes DESC";
+         $stmt = $pdo->prepare($sql);
+         $stmt -> execute();
+         
+         return $stmt->fetchAll(\PDO::FETCH_ASSOC); 
+    }
 }
