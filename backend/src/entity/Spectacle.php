@@ -110,11 +110,28 @@ class Spectacle {
     
     public function delete(\PDO $pdo): void
     {
+        $sqlRole = "DELETE FROM role WHERE spectacle_id = :id";
+        $stmtRole = $pdo->prepare($sqlRole);
+        $stmtRole->bindParam(':id', $this->id, \PDO::PARAM_INT);
+        $stmtRole->execute();
+
+        $sqlSchedule = "DELETE FROM schedule WHERE spectacle_id = :id";
+        $stmtSchedule = $pdo->prepare($sqlSchedule);
+        $stmtSchedule->bindParam(':id', $this->id, \PDO::PARAM_INT);
+        $stmtSchedule->execute();
+
+        $sqlRepresentation = "DELETE FROM representation WHERE spectacle_id = :id";
+        $stmtRepresentation = $pdo->prepare($sqlRepresentation);
+        $stmtRepresentation->bindParam(':id', $this->id, \PDO::PARAM_INT);
+        $stmtRepresentation->execute();
+
         $sql = "DELETE FROM spectacle WHERE id = :id";
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':id', $this->id, \PDO::PARAM_INT);
         $stmt->execute();
     }
+    
+    
 
     public function getSpectacleByFilter(\PDO $pdo, $filter): array
     {

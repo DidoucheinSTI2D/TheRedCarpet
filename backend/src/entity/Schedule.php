@@ -1,6 +1,8 @@
 <?php 
 
-class Shedule{
+namespace App\Entity;
+
+class Schedule{
     private $date;
     private $booked;
     private $paid;
@@ -78,15 +80,15 @@ class Shedule{
         return $this->notation;
     }
 
-    public function setReactions(string $reactions): void
+    public function setReactions(array $reactions): void
     {
-        $this->reactions = $reactions;
+        $this->reactions = json_encode($reactions);
     }
-
-    public function getReactions(): string
+    
+    public function getReactions(): array
     {
-        return $this->reactions;
-    }
+        return $this->reactions ? json_decode($this->reactions, true) : [];
+    }    
 
     public function setSpectacleId(int $spectacle_id): void
     {
@@ -110,7 +112,7 @@ class Shedule{
 
     public function save(\PDO $pdo): void
     {
-        $sql = "INSERT INTO shedule (date, booked, paid, amount, comment, notation, reactions, spectacle_id, subscriber_id) VALUES (:date, :booked, :paid, :amount, :comment, :notation, :reactions, :spectacle_id, :subscriber_id)";
+        $sql = "INSERT INTO schedule (date, booked, paid, amount, comment, notation, reactions, spectacle_id, subscriber_id) VALUES (:date, :booked, :paid, :amount, :comment, :notation, :reactions, :spectacle_id, :subscriber_id)";
         $stmt = $pdo->prepare($sql);
         $stmt -> bindParam(':date', $this->date);
         $stmt -> bindParam(':booked', $this->booked);
@@ -126,9 +128,33 @@ class Shedule{
 
     public function delete(\PDO $pdo): void
     {
-        $sql = "DELETE FROM shedule WHERE date = :date";
+        $sql = "DELETE FROM schedule WHERE spectacle_id = :spectacle_id";
         $stmt = $pdo->prepare($sql);
-        $stmt -> bindParam(':date', $this->date);
+        $stmt -> bindParam(':spectacle_id', $this->spectacle_id);
         $stmt -> execute();
     }
+
+    public function updateNote(int $spectacleId, int $subscriberId, string $comment, int $notation, array $reactions): bool
+    {
+        $sql = "UPDATE schedule 
+                SET notation = :notation, 
+                    comment = :comment, 
+                    reactions = :reactions 
+                WHERE spectacle_id = :spectacle_id 
+                  AND subscriber_id = :subscriber_id 
+                  AND paid = TRUE";
+    
+        $stmt = $this->pdo->prepare($sql);
+    
+        $stmt->bindParam(':notation', $notation, \PDO::PARAM_INT);
+        $stmt->bindParam(':comment', $comment, \PDO::PARAM_STR);
+        $encodedReactions = json_encode($reactions);
+        $stmt->bindParam(':reactions', $encodedReactions, \PDO::PARAM_STR);
+        $stmt->bindParam(':spectacle_id', $spectacleId, \PDO::PARAM_INT);
+        $stmt->bindParam(':subscriber_id', $subscriberId, \PDO::PARAM_INT);
+    
+        return $stmt->execute();
+    }
+    
+    
 }

@@ -8,7 +8,7 @@ class Theatre{
     private $presentation;
     private $address;
     private $borough;
-    private $geolocation;
+    private $geolocalisation;
     private $phone;
     private $email;
 
@@ -69,15 +69,32 @@ class Theatre{
         $this->borough = $borough;
     }
 
-    public function getGeolocation(): string
+    public function getGeolocalisation(): array
     {
-        return $this->geolocation;
+        if (preg_match('/POINT\(([-\d.]+) ([-\d.]+)\)/', $this->geolocalisation, $matches)) {
+            return [
+                'latitude' => (float) $matches[1],
+                'longitude' => (float) $matches[2],
+            ];
+        }
+    
+        return [
+            'latitude' => 0,
+            'longitude' => 0,
+        ];
     }
+    
+    
 
-    public function setGeolocation(string $geolocation): void
+    public function setGeolocalisation(array $coordinates): void
     {
-        $this->geolocation = $geolocation;
+        $latitude = $coordinates['latitude'] ?? 0; // Défaut : 0 si non fourni
+        $longitude = $coordinates['longitude'] ?? 0; // Défaut : 0 si non fourni
+    
+        $this->geolocalisation = $latitude . ' ' . $longitude;
     }
+    
+    
 
     public function getPhone(): string
     {
@@ -101,17 +118,23 @@ class Theatre{
 
     public function save(\PDO $pdo): void
     {
-        $sql = "INSERT INTO theatre (name, presentation, address, borough, geolocation, phone, email) VALUES (:name, :presentation, :address, :borough, :geolocation, :phone, :email)";
+        $sql = "INSERT INTO theatre (name, presentation, address, borough, geolocalisation, phone, email) 
+                VALUES (:name, :presentation, :address, :borough, ST_GeomFromText(:geolocalisation), :phone, :email)";
         $stmt = $pdo->prepare($sql);
-        $stmt -> bindParam(':name', $this->name);
-        $stmt -> bindParam(':presentation', $this->presentation);
-        $stmt -> bindParam(':address', $this->address);
-        $stmt -> bindParam(':borough', $this->borough);
-        $stmt -> bindParam(':geolocation', $this->geolocation);
-        $stmt -> bindParam(':phone', $this->phone);
-        $stmt -> bindParam(':email', $this->email);
+    
+        $stmt->bindParam(':name', $this->name);
+        $stmt->bindParam(':presentation', $this->presentation);
+        $stmt->bindParam(':address', $this->address);
+        $stmt->bindParam(':borough', $this->borough);
+        $point = "POINT(" . $this->geolocalisation . ")";
+        $stmt->bindParam(':geolocalisation', $point);
+    
+        $stmt->bindParam(':phone', $this->phone);
+        $stmt->bindParam(':email', $this->email);
+    
         $stmt->execute();
     }
+    
 
     public function delete(\PDO $pdo): void
     {
