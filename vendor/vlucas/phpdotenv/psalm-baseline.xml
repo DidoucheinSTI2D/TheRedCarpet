@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files psalm-version="5.25.0@01a8eb06b9e9cc6cfb6a320bf9fb14331919d505">
+  <file src="src/Repository/Adapter/EnvConstAdapter.php">
+    <RedundantConditionGivenDocblockType>
+      <code><![CDATA[\is_scalar($value)]]></code>
+    </RedundantConditionGivenDocblockType>
+  </file>
+  <file src="src/Repository/RepositoryBuilder.php">
+    <InvalidStringClass>
+      <code><![CDATA[$adapter::create()]]></code>
+      <code><![CDATA[$reader::create()]]></code>
+      <code><![CDATA[$writer::create()]]></code>
+    </InvalidStringClass>
+    <MissingClosureReturnType>
+      <code><![CDATA[static function ($adapter) {]]></code>
+      <code><![CDATA[static function ($reader) {]]></code>
+      <code><![CDATA[static function ($writer) {]]></code>
+    </MissingClosureReturnType>
+  </file>
+  <file src="src/Util/Regex.php">
+    <ArgumentTypeCoercion>
+      <code><![CDATA[$pattern]]></code>
+      <code><![CDATA[$pattern]]></code>
+      <code><![CDATA[$pattern]]></code>
+      <code><![CDATA[$pattern]]></code>
+    </ArgumentTypeCoercion>
+    <InvalidReturnStatement>
+      <code><![CDATA[self::pregAndWrap(static function (string $subject) use ($pattern) {
+            return (int) @\preg_match_all($pattern, $subject);
+        }, $subject)]]></code>
+    </InvalidReturnStatement>
+    <InvalidReturnType>
+      <code><![CDATA[\GrahamCampbell\ResultType\Result<int,string>]]></code>
+    </InvalidReturnType>
+  </file>
+</files>
