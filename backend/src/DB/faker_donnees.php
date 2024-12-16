@@ -5,7 +5,7 @@ use Faker\Factory;
 
 // Connexion à la base de données
 $host = '127.0.0.1';
-$db = 'c';
+$db = 'theredcarpet';
 $user = 'root';
 $pass = '';
 $charset = 'utf8mb4';
@@ -64,7 +64,7 @@ for ($i = 0; $i < $nbSubscribers; $i++) {
     $stmt = $pdo->prepare("INSERT INTO subscriber (username, password, email, birthdate, first_name, last_name) VALUES (?, ?, ?, ?, ?, ?)");
     $stmt->execute([
         $faker->userName,
-        password_hash($faker->password, PASSWORD_BCRYPT),
+        $faker->password,
         $faker->email,
         $faker->date('Y-m-d'),
         $faker->firstName,
