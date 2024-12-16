@@ -77,3 +77,32 @@ export const getLogin = async (username: string, password: string) => {
     };
   }
 };
+
+
+export const getOngoingRepresentations = async () => {
+  try {
+    const apiHost = import.meta.env.VITE_API_HOST || "http://localhost:8888";
+    const response = await fetch(`${apiHost}/API/representation/getOngoingRepresentations.php`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      return { data: data.data, status: data.status, error: false };
+    } else {
+      return {
+        message: data.message || "Failed to fetch ongoing representations.",
+        error: true,
+      };
+    }
+  } catch (err: any) {
+    return {
+      message: "Failed to connect to the server. " + err.message,
+      error: true,
+    };
+  }
+};
