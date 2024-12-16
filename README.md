@@ -20,7 +20,7 @@ DB_PASS=YourPassword
 
 ### 4. Test our request directly in Insomnia with Insomnia_TheRedCarpet.json. 👁️
 
-## 5. Dump autoload
+### 5. Dump autoload
 
 ```bash
 composer dump-autoload
