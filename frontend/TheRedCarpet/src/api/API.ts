@@ -18,7 +18,7 @@ export const getRegister = async ({
   try {
     const apiHost =
       import.meta.env.VITE_API_HOST ||
-      "http://localhost:8888/TheRedCarpet/Backend/";
+      "http://localhost:8888";
     const response = await fetch(`${apiHost}/API/user/register.php`, {
       method: "POST",
       headers: {
@@ -81,7 +81,7 @@ export const getLogin = async (username: string, password: string) => {
 
 export const getOngoingRepresentations = async () => {
   try {
-    const apiHost = import.meta.env.VITE_API_HOST || "http://localhost:8888/TheRedCarpet/Backend/";
+    const apiHost = import.meta.env.VITE_API_HOST || "http://localhost:8888";
     const response = await fetch(`${apiHost}/API/representation/getOngoingRepresentations.php`, {
       method: "GET",
       headers: {
@@ -557,7 +557,7 @@ export const disconnectUser  = async () => {
   try {
     const apiHost = import.meta.env.VITE_API_HOST || "http://localhost:8888/TheRedCarpet/Backend";
     const response = await fetch(`${apiHost}/API/user/disconnect.php`, {
-      method: "POST", // Utilisez POST pour la déconnexion
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
