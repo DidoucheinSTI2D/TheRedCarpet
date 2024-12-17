@@ -1080,3 +1080,115 @@ export const createSchedule = async (
     };
   }
 };
+
+
+
+export const deleteTheatre = async (id: number) => {
+  try {
+    const apiHost = import.meta.env.VITE_API_HOST || "http://localhost:8888/TheRedCarpet/Backend";
+    const response = await fetch(`${apiHost}/API/theatre/deleteTheatre.php`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: id,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      return { message: data.message, status: data.status, error: false };
+    } else {
+      return {
+        message: data.message || "Failed to delete theatre.",
+        error: true,
+      };
+    }
+  } catch (err) {
+    const errorMessage = err instanceof Error ? err.message : "Unknown error";
+    return {
+      message: "Failed to connect to the server. " + errorMessage,
+      error: true,
+    };
+  }
+};
+
+
+
+export const newTheatre = async (
+  name: string,
+  presentation: string,
+  address: string,
+  borough: string,
+  geolocalisation: string,
+  phone: string,
+  email: string
+) => {
+  try {
+    const apiHost = import.meta.env.VITE_API_HOST || "http://localhost:8888/TheRedCarpet/Backend";
+    const response = await fetch(`${apiHost}/API/theatre/newTheatre`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: name,
+        presentation: presentation,
+        address: address,
+        borough: borough,
+        geolocalisation: geolocalisation,
+        phone: phone,
+        email: email,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      return { message: data.message, status: data.status, error: false };
+    } else {
+      return {
+        message: data.message || "Failed to create theatre.",
+        error: true,
+      };
+    }
+  } catch (err) {
+    const errorMessage = err instanceof Error ? err.message : "Unknown error";
+    return {
+      message: "Failed to connect to the server. " + errorMessage,
+      error: true,
+    };
+  }
+};
+
+
+export const getScenaristsPerTheatre = async (theatreId: number) => {
+  try {
+    const apiHost = import.meta.env.VITE_API_HOST || "http://localhost:8888/TheRedCarpet/Backend";
+    const response = await fetch(`${apiHost}/API/theatre/ScenaristPerTheater.php?theatre=${theatreId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      return { message: data.message, status: data.status, data: data.data, error: false };
+    } else {
+      return {
+        message: data.message || "Failed to retrieve scenarists.",
+        error: true,
+      };
+    }
+  } catch (err) {
+    const errorMessage = err instanceof Error ? err.message : "Unknown error";
+    return {
+      message: "Failed to connect to the server. " + errorMessage,
+      error: true,
+    };
+  }
+};
