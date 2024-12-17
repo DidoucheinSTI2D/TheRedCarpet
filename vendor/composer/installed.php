@@ -3,7 +3,7 @@
         'name' => 'didou/the-red-carpet',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '15c1328ee16f3b195b941926ca96a4afcb5374b2',
+        'reference' => 'd0a3781c3a3cb57e982914adef2b7cf663eee2b1',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'didou/the-red-carpet' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '15c1328ee16f3b195b941926ca96a4afcb5374b2',
+            'reference' => 'd0a3781c3a3cb57e982914adef2b7cf663eee2b1',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

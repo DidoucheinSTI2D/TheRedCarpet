@@ -1,13 +1,13 @@
 {
-    "name": "didou/the-red-carpet",
-    "autoload": {
-        "psr-4": {
-            "App\\": "backend/src/"
-        }
-    },
-    "require": {
-        "vlucas/phpdotenv": "^5.6",
-        "symfony/var-dumper": "^5.4",
-        "fakerphp/faker": "^1.9"
+  "name": "didou/the-red-carpet",
+  "autoload": {
+    "psr-4": {
+      "App\\": "backend/src/"
     }
+  },
+  "require": {
+    "vlucas/phpdotenv": "^5.6",
+    "symfony/var-dumper": "^5.4",
+    "fakerphp/faker": "^1.9"
+  }
 }

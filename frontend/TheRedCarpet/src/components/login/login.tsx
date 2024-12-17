@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -16,6 +14,8 @@ import {
 import { Input } from "../ui/input";
 import { useState } from "react";
 import { getLogin } from "../../api/API";
+import { useAuth } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 // Define the form schema with Zod
 const loginFormSchema = z.object({
@@ -24,6 +24,8 @@ const loginFormSchema = z.object({
 });
 
 function Login() {
+  const { setUser } = useAuth();
+  const navigate = useNavigate();
   const [message, setMessage] = useState("");
   const [error, setError] = useState(false);
 
@@ -41,6 +43,11 @@ function Login() {
     const result = await getLogin(values.username, values.password);
     setMessage(result.message);
     setError(result.error);
+
+    if (!result.error && result.user) {
+      setUser(result.user);
+      navigate("/home");
+    }
   };
 
   return (
@@ -111,7 +118,7 @@ function Login() {
           <Button
             variant="outline"
             className="w-full"
-            onClick={() => (window.location.href = "/register")}
+            onClick={() => navigate("/register")}
           >
             Create an account
           </Button>
