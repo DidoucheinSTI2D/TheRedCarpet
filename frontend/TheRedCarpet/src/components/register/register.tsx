@@ -16,6 +16,7 @@ import {
 } from "../ui/form";
 import { Input } from "../ui/input";
 import { getRegister } from "../../api/API";
+import { useNavigate } from "react-router-dom";
 
 // Zod schema for the form
 const formSchema = z.object({
@@ -40,7 +41,6 @@ const formSchema = z.object({
 });
 
 function Register() {
-  const [step, setStep] = useState(1);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -53,6 +53,8 @@ function Register() {
     },
   });
 
+  const navigate = useNavigate();
+
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       const result = await getRegister(values);
@@ -60,6 +62,9 @@ function Register() {
         form.setError("root", {
           message: result.message,
         });
+      } else {
+        console.log("Registration successful, navigating to login...");
+        navigate("/");
       }
     } catch (error) {
       form.setError("root", {
@@ -68,135 +73,103 @@ function Register() {
     }
   }
 
-  const nextStep = async () => {
-    const fieldsToValidate = ["username", "email", "password"] as const;
-    const result = await form.trigger(fieldsToValidate);
-    if (result) {
-      setStep(2);
-    }
-  };
-
   return (
     <div className="flex flex-col items-center gap-12 w-full max-w-md mx-auto p-6">
       <div className="w-[300px]">
         <h1 className="text-2xl font-bold text-center mb-5">Register.</h1>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            {step === 1 ? (
-              <>
-                <FormField
-                  control={form.control}
-                  name="username"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Username</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Enter username" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+            <FormField
+              control={form.control}
+              name="username"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Username</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter username" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-                <FormField
-                  control={form.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Email</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="email"
-                          placeholder="Enter email"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input type="email" placeholder="Enter email" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-                <FormField
-                  control={form.control}
-                  name="password"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Password</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="password"
-                          placeholder="Enter password"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Password</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="password"
+                      placeholder="Enter password"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <div className="flex gap-4">
+              <FormField
+                control={form.control}
+                name="first_name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>First Name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Enter first name" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-                <Button type="button" onClick={nextStep} className="w-full">
-                  Next
-                </Button>
-              </>
-            ) : (
-              <>
-                <FormField
-                  control={form.control}
-                  name="birthdate"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Birth Date</FormLabel>
-                      <FormControl>
-                        <Input type="date" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+              <FormField
+                control={form.control}
+                name="last_name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Last Name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Enter last name" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <FormField
+              control={form.control}
+              name="birthdate"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Birth Date</FormLabel>
+                  <FormControl>
+                    <Input type="date" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-                <FormField
-                  control={form.control}
-                  name="first_name"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>First Name</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Enter first name" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="last_name"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Last Name</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Enter last name" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <div className="flex gap-4">
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={() => setStep(1)}
-                    className="w-full"
-                  >
-                    Back
-                  </Button>
-                  <Button type="submit" className="w-full">
-                    Register
-                  </Button>
-                </div>
-              </>
-            )}
+            <Button type="submit" className="w-full">
+              Register
+            </Button>
 
             {form.formState.errors.root && (
               <p className="text-destructive text-center mt-2">
@@ -220,7 +193,7 @@ function Register() {
           <Button
             variant="outline"
             className="w-full"
-            onClick={() => (window.location.href = "/login")}
+            onClick={() => navigate("/")}
           >
             Already have an account
           </Button>

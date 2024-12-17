@@ -15,7 +15,7 @@ class Connector {
         $host = $_ENV['DB_HOST'];
         $dbname = $_ENV['DB_NAME'];
 
-        $this->pdo = new \PDO("mysql:host=$host;dbname=$dbname", $_ENV['DB_USER'], '');
+        $this->pdo = new \PDO("mysql:host=$host;dbname=$dbname", $_ENV['DB_USER'], $_ENV['DB_PASS']);
     
     }
 

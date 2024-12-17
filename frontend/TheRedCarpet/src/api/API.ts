@@ -51,8 +51,10 @@ export const getRegister = async ({
 
 export const getLogin = async (username: string, password: string) => {
   try {
-    const apiHost = import.meta.env.VITE_API_HOST || "http://localhost:8888";
-    const response = await fetch(`${apiHost}/API/user/login.php`, {
+    const apiHost =
+      import.meta.env.VITE_API_HOST ||
+      "http://localhost:8888/TheRedCarpet/Backend/";
+    const response = await fetch(`${apiHost}API/user/login.php`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -78,16 +80,20 @@ export const getLogin = async (username: string, password: string) => {
   }
 };
 
-
 export const getOngoingRepresentations = async () => {
   try {
-    const apiHost = import.meta.env.VITE_API_HOST || "http://localhost:8888";
-    const response = await fetch(`${apiHost}/API/representation/getOngoingRepresentations.php`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const apiHost =
+      import.meta.env.VITE_API_HOST ||
+      "http://localhost:8888/TheRedCarpet/Backend/";
+    const response = await fetch(
+      `${apiHost}API/representation/getOnGoingRepresentation.php`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     const data = await response.json();
 
