@@ -77,3 +77,29 @@ export const getLogin = async (username: string, password: string) => {
     };
   }
 };
+
+export const getDistinctLieux = async () => {
+  try {
+    const apiHost =
+      import.meta.env.VITE_API_HOST || "http://localhost:8888";
+    const response = await fetch(`${apiHost}/API/spectacles/lieux.php`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      return { lieux: data.lieux, error: false };
+    } else {
+      return { message: data.message || "An error occurred.", error: true };
+    }
+  } catch (err: any) {
+    return {
+      message: "Failed to connect to the server. " + err.message,
+      error: true,
+    };
+  }
+};

@@ -1,8 +1,9 @@
-<?php 
+<?php
 
 namespace App\Entity;
 
-class Room {
+class Room
+{
     private $id;
     private $name;
     private $gauge;
@@ -59,10 +60,10 @@ class Room {
     {
         $sql = "INSERT INTO room (name, gauge, theater_id) VALUES (:name, :gauge, :theater_id)";
         $stmt = $pdo->prepare($sql);
-        $stmt -> bindParam(':name', $this->name);
-        $stmt -> bindParam(':gauge', $this->gauge);
-        $stmt -> bindParam(':theater_id', $this->theater_id);
-        $stmt -> execute();
+        $stmt->bindParam(':name', $this->name);
+        $stmt->bindParam(':gauge', $this->gauge);
+        $stmt->bindParam(':theater_id', $this->theater_id);
+        $stmt->execute();
 
         $this->id = $pdo->lastInsertId();
     }
@@ -71,8 +72,8 @@ class Room {
     {
         $sql = "DELETE FROM room WHERE id = :id";
         $stmt = $pdo->prepare($sql);
-        $stmt -> bindParam(':id', $this->id);
-        $stmt -> execute();
+        $stmt->bindParam(':id', $this->id);
+        $stmt->execute();
     }
 
     public function findRoomByBorough(string $borough): array
@@ -88,5 +89,30 @@ class Room {
 
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
+
+    public function getDistinctLieux(): array
+    {
+
+        /**
+         * Récupère la liste des lieux distincts des spectacles.
+         *
+         * @return array Liste des lieux.
+         * @throws \Exception En cas d'erreur lors de la récupération.
+         */
+
+        try {
+            // Préparer et exécuter la requête SQL
+            $stmt = $this->pdo->prepare("SELECT DISTINCT lieu FROM spectacles ORDER BY lieu ASC");
+            $stmt->execute();
+
+            // Récupérer les résultats
+            return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\PdoException $e) {
+            // Gérer les exceptions et remonter une erreur explicite
+            throw new \Exception("Erreur lors de la récupération des lieux : " . $e->getMessage());
+        }
+    }
+
+
 
 }
