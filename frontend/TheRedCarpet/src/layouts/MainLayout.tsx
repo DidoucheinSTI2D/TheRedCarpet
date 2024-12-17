@@ -53,7 +53,7 @@ export default function MainLayout() {
         </div>
       </header>
 
-      <main className="container pt-6 text-zinc-200">
+      <main className="pt-6 text-zinc-200 flex flex-col items-center justify-center w-full">
         <Outlet />
       </main>
     </div>
