@@ -6,7 +6,7 @@ const Post = ({ data, position }: { data: any; position: number }) => {
   return (
     <div
       id={position.toString()}
-      className="flex flex-col text-white w-[60rem] min-h-[10rem] h-auto bg-gray-950 rounded-lg border border-gray-200 p-[1rem] hover:shadow-[0_0px_60px_-20px_rgba(255,0,0,0.8)]"
+      className="flex flex-col text-white w-[60rem] rounded-lg border border-gray-200 p-[1rem] hover:shadow-[0_0px_60px_-20px_rgba(255,0,0,0.8)]"
     >
       <TopPost name={data.name}></TopPost>
       <BottomPost
