@@ -17,7 +17,6 @@ import { getLogin } from "../../api/API";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
-// Define the form schema with Zod
 const loginFormSchema = z.object({
   username: z.string().min(1, "Username is required"),
   password: z.string().min(1, "Password is required"),
@@ -29,7 +28,6 @@ function Login() {
   const [message, setMessage] = useState("");
   const [error, setError] = useState(false);
 
-  // Initialize the form
   const form = useForm<z.infer<typeof loginFormSchema>>({
     resolver: zodResolver(loginFormSchema),
     defaultValues: {
@@ -38,9 +36,9 @@ function Login() {
     },
   });
 
-  // Handle form submission
   const onSubmit = async (values: z.infer<typeof loginFormSchema>) => {
     const result = await getLogin(values.username, values.password);
+    console.log(result);
     setMessage(result.message);
     setError(result.error);
 

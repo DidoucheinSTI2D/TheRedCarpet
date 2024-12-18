@@ -66,7 +66,7 @@ export const getLogin = async (username: string, password: string) => {
     const data = await response.json();
 
     if (response.ok) {
-      return { message: data.message, error: false, user: data.user };
+      return { message: data.message, error: false, user: data.data };
     } else {
       return { message: data.message || "Login failed.", error: true };
     }
