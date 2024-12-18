@@ -1,7 +1,4 @@
 import React, { useState } from 'react';
-import "./BottomPost.css"
-import Like from "../../assets/Like.svg"
-import Comment from "../../assets/Comment.svg"
 
 
 

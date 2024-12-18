@@ -1,5 +1,4 @@
 import React from 'react';
-import "./TopPost.css"
 
 // Pour les call api :
 // ici on rajoute a cote de name les trucs que tu veux
