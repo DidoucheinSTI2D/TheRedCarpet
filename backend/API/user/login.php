@@ -27,10 +27,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $user = new User($pdo);
 
-        if ($user->login($pdo, $data['username'], $data['password'])) {
+        $userData = $user->login($pdo, $data['username'], $data['password']);
+        if ($userData) {
             echo json_encode([
                 "status" => "success",
-                "message" => "Login successful."
+                "message" => "Login successful.",
+                "data" => $userData
             ]);
         } else {
             http_response_code(401);

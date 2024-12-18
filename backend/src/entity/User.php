@@ -90,8 +90,8 @@ class User {
     }
 
     
-    public function login(\PDO $pdo, string $username, string $password): bool {
-        $sql = 'SELECT id, password FROM SUBSCRIBER WHERE username = :username';
+    public function login(\PDO $pdo, string $username, string $password): ?array {
+        $sql = 'SELECT id, username, email, birthdate, password FROM SUBSCRIBER WHERE username = :username';
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':username', $username);
         $stmt->execute();
@@ -100,13 +100,19 @@ class User {
         if ($user && password_verify($password, $user['password'])) {
             session_start();
             $_SESSION['user_id'] = $user['id'];
-            $this->id = $user['id'];
-            $this->username = $username;
-            return true;
+            
+            return [
+                "id" => $user['id'],
+                "username" => $user['username'],
+                "email" => $user['email'],
+                "birthdate" => $user['birthdate'],
+                "password" => $user['password']
+            ];
         }
     
-        return false;
+        return null;
     }
+    
     
     public function delete(\PDO $pdo, int $id): void
     {
