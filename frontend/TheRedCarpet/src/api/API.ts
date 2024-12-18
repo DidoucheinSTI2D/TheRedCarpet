@@ -16,9 +16,7 @@ export const getRegister = async ({
   last_name,
 }: RegisterParams) => {
   try {
-    const apiHost =
-      import.meta.env.VITE_API_HOST ||
-      "http://localhost:8888";
+    const apiHost = import.meta.env.VITE_API_HOST || "http://localhost:8888";
     const response = await fetch(`${apiHost}/API/user/register.php`, {
       method: "POST",
       headers: {
@@ -115,13 +113,18 @@ export const getOngoingRepresentations = async () => {
 
 export const countSpectaclesByCategory = async () => {
   try {
-    const apiHost = import.meta.env.VITE_API_HOST || "http://localhost:8888/TheRedCarpet/Backend";
-    const response = await fetch(`${apiHost}/API/spectacle/countSpectacle.php`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const apiHost =
+      import.meta.env.VITE_API_HOST ||
+      "http://localhost:8888/TheRedCarpet/Backend";
+    const response = await fetch(
+      `${apiHost}/API/spectacle/countSpectacle.php`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     const data = await response.json();
 
@@ -144,13 +147,20 @@ export const countSpectaclesByCategory = async () => {
 
 export const filterSpectacles = async (filter: string) => {
   try {
-    const apiHost = import.meta.env.VITE_API_HOST || "http://localhost:8888/TheRedCarpet/Backend";
-    const response = await fetch(`${apiHost}/API/spectacle/filterSpectacle.php?filter=${encodeURIComponent(filter)}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const apiHost =
+      import.meta.env.VITE_API_HOST ||
+      "http://localhost:8888/TheRedCarpet/Backend";
+    const response = await fetch(
+      `${apiHost}/API/spectacle/filterSpectacle.php?filter=${encodeURIComponent(
+        filter
+      )}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     const data = await response.json();
 
@@ -173,14 +183,19 @@ export const filterSpectacles = async (filter: string) => {
 
 export const deleteCategory = async (categoryId: string) => {
   try {
-    const apiHost = import.meta.env.VITE_API_HOST || "http://localhost:8888/TheRedCarpet/Backend";
-    const response = await fetch(`${apiHost}/API/spectacle/deleteCategory.php`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ id: categoryId }),
-    });
+    const apiHost =
+      import.meta.env.VITE_API_HOST ||
+      "http://localhost:8888/TheRedCarpet/Backend";
+    const response = await fetch(
+      `${apiHost}/API/spectacle/deleteCategory.php`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id: categoryId }),
+      }
+    );
 
     const data = await response.json();
 
@@ -202,14 +217,19 @@ export const deleteCategory = async (categoryId: string) => {
 
 export const deleteSpectacle = async (spectacleId: string) => {
   try {
-    const apiHost = import.meta.env.VITE_API_HOST || "http://localhost:8888/TheRedCarpet/Backend";
-    const response = await fetch(`${apiHost}/API/spectacle/deleteSpectacle.php`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ id: spectacleId }),
-    });
+    const apiHost =
+      import.meta.env.VITE_API_HOST ||
+      "http://localhost:8888/TheRedCarpet/Backend";
+    const response = await fetch(
+      `${apiHost}/API/spectacle/deleteSpectacle.php`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id: spectacleId }),
+      }
+    );
 
     const data = await response.json();
 
@@ -230,16 +250,22 @@ export const deleteSpectacle = async (spectacleId: string) => {
   }
 };
 
-
 export const getSpectaclesByBorough = async (borough: string) => {
   try {
-    const apiHost = import.meta.env.VITE_API_HOST || "http://localhost:8888/TheRedCarpet/Backend";
-    const response = await fetch(`${apiHost}/API/spectacle/getSpectacleByBorough.php?borough=${encodeURIComponent(borough)}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const apiHost =
+      import.meta.env.VITE_API_HOST ||
+      "http://localhost:8888/TheRedCarpet/Backend";
+    const response = await fetch(
+      `${apiHost}/API/spectacle/getSpectacleByBorough.php?borough=${encodeURIComponent(
+        borough
+      )}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     const data = await response.json();
 
@@ -262,7 +288,9 @@ export const getSpectaclesByBorough = async (borough: string) => {
 
 export const createCategory = async (name: string, helpText: string) => {
   try {
-    const apiHost = import.meta.env.VITE_API_HOST || "http://localhost:8888/TheRedCarpet/Backend";
+    const apiHost =
+      import.meta.env.VITE_API_HOST ||
+      "http://localhost:8888/TheRedCarpet/Backend";
     const response = await fetch(`${apiHost}/API/spectacle/newCategory.php`, {
       method: "POST",
       headers: {
@@ -290,15 +318,31 @@ export const createCategory = async (name: string, helpText: string) => {
   }
 };
 
-export const createSpectacle = async (title: string, synopsis: string, duration: number, price: number, language: string, categoryId: string) => {
+export const createSpectacle = async (
+  title: string,
+  synopsis: string,
+  duration: number,
+  price: number,
+  language: string,
+  categoryId: string
+) => {
   try {
-    const apiHost = import.meta.env.VITE_API_HOST || "http://localhost:8888/TheRedCarpet/Backend";
+    const apiHost =
+      import.meta.env.VITE_API_HOST ||
+      "http://localhost:8888/TheRedCarpet/Backend";
     const response = await fetch(`${apiHost}/API/spectacle/newSpectacle.php`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ title, synopsis, duration, price, language, category_id: categoryId }),
+      body: JSON.stringify({
+        title,
+        synopsis,
+        duration,
+        price,
+        language,
+        category_id: categoryId,
+      }),
     });
 
     const data = await response.json();
@@ -322,13 +366,20 @@ export const createSpectacle = async (title: string, synopsis: string, duration:
 
 export const getOngoingSpectaclesByCategory = async (categoryId: string) => {
   try {
-    const apiHost = import.meta.env.VITE_API_HOST || "http://localhost:8888/TheRedCarpet/Backend";
-    const response = await fetch(`${apiHost}/API/spectacle/onGoingSpectacle.php?category_id=${encodeURIComponent(categoryId)}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const apiHost =
+      import.meta.env.VITE_API_HOST ||
+      "http://localhost:8888/TheRedCarpet/Backend";
+    const response = await fetch(
+      `${apiHost}/API/spectacle/onGoingSpectacle.php?category_id=${encodeURIComponent(
+        categoryId
+      )}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     const data = await response.json();
 
@@ -351,13 +402,18 @@ export const getOngoingSpectaclesByCategory = async (categoryId: string) => {
 
 export const getRecepyPerSpectacle = async () => {
   try {
-    const apiHost = import.meta.env.VITE_API_HOST || "http://localhost:8888/TheRedCarpet/Backend";
-    const response = await fetch(`${apiHost}/API/spectacle/RecepyPerSpectacle.php`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const apiHost =
+      import.meta.env.VITE_API_HOST ||
+      "http://localhost:8888/TheRedCarpet/Backend";
+    const response = await fetch(
+      `${apiHost}/API/spectacle/RecepyPerSpectacle.php`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     const data = await response.json();
 
@@ -380,13 +436,18 @@ export const getRecepyPerSpectacle = async () => {
 
 export const getTopThreeSpectacles = async () => {
   try {
-    const apiHost = import.meta.env.VITE_API_HOST || "http://localhost:8888/TheRedCarpet/Backend";
-    const response = await fetch(`${apiHost}/API/spectacle/TopThreeSpectacles.php`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const apiHost =
+      import.meta.env.VITE_API_HOST ||
+      "http://localhost:8888/TheRedCarpet/Backend";
+    const response = await fetch(
+      `${apiHost}/API/spectacle/TopThreeSpectacles.php`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     const data = await response.json();
 
@@ -407,16 +468,25 @@ export const getTopThreeSpectacles = async () => {
   }
 };
 
-export const updateCategory = async (id: string, name: string, helpText: string) => {
+export const updateCategory = async (
+  id: string,
+  name: string,
+  helpText: string
+) => {
   try {
-    const apiHost = import.meta.env.VITE_API_HOST || "http://localhost:8888/TheRedCarpet/Backend";
-    const response = await fetch(`${apiHost}/API/spectacle/updateCategory.php`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ id, name, helpText }),
-    });
+    const apiHost =
+      import.meta.env.VITE_API_HOST ||
+      "http://localhost:8888/TheRedCarpet/Backend";
+    const response = await fetch(
+      `${apiHost}/API/spectacle/updateCategory.php`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id, name, helpText }),
+      }
+    );
 
     const data = await response.json();
 
@@ -437,16 +507,26 @@ export const updateCategory = async (id: string, name: string, helpText: string)
   }
 };
 
-export const createRepresentation = async (spectacleId: string, date: string, time: string, venue: string) => {
+export const createRepresentation = async (
+  spectacleId: string,
+  date: string,
+  time: string,
+  venue: string
+) => {
   try {
-    const apiHost = import.meta.env.VITE_API_HOST || "http://localhost:8888/TheRedCarpet/Backend";
-    const response = await fetch(`${apiHost}/API/representation/newRepresentation.php`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ spectacleId, date, time, venue }),
-    });
+    const apiHost =
+      import.meta.env.VITE_API_HOST ||
+      "http://localhost:8888/TheRedCarpet/Backend";
+    const response = await fetch(
+      `${apiHost}/API/representation/newRepresentation.php`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ spectacleId, date, time, venue }),
+      }
+    );
 
     const data = await response.json();
 
@@ -467,16 +547,31 @@ export const createRepresentation = async (spectacleId: string, date: string, ti
   }
 };
 
-export const deleteRepresentation = async (firstDate: string, lastDate: string, spectacleId: string, roomId: string) => {
+export const deleteRepresentation = async (
+  firstDate: string,
+  lastDate: string,
+  spectacleId: string,
+  roomId: string
+) => {
   try {
-    const apiHost = import.meta.env.VITE_API_HOST || "http://localhost:8888/TheRedCarpet/Backend";
-    const response = await fetch(`${apiHost}/API/representation/deleteRepresentation.php`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ first_date: firstDate, last_date: lastDate, spectacle_id: spectacleId, room_id: roomId }),
-    });
+    const apiHost =
+      import.meta.env.VITE_API_HOST ||
+      "http://localhost:8888/TheRedCarpet/Backend";
+    const response = await fetch(
+      `${apiHost}/API/representation/deleteRepresentation.php`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          first_date: firstDate,
+          last_date: lastDate,
+          spectacle_id: spectacleId,
+          room_id: roomId,
+        }),
+      }
+    );
 
     const data = await response.json();
 
@@ -499,13 +594,18 @@ export const deleteRepresentation = async (firstDate: string, lastDate: string, 
 
 export const getFullyBookedPastShows = async () => {
   try {
-    const apiHost = import.meta.env.VITE_API_HOST || "http://localhost:8888/TheRedCarpet/Backend";
-    const response = await fetch(`${apiHost}/API/representation/getFullyBookedPastShows.php`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const apiHost =
+      import.meta.env.VITE_API_HOST ||
+      "http://localhost:8888/TheRedCarpet/Backend";
+    const response = await fetch(
+      `${apiHost}/API/representation/getFullyBookedPastShows.php`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     const data = await response.json();
 
@@ -526,11 +626,7 @@ export const getFullyBookedPastShows = async () => {
   }
 };
 
-
-
-
-
-export const deleteUser  = async (id: string) => {
+export const deleteUser = async (id: string) => {
   try {
     const apiHost = import.meta.env.VITE_API_HOST || "http://localhost:8888";
     const response = await fetch(`${apiHost}/API/user/deleteUser.php`, {
@@ -558,10 +654,11 @@ export const deleteUser  = async (id: string) => {
   }
 };
 
-
-export const disconnectUser  = async () => {
+export const disconnectUser = async () => {
   try {
-    const apiHost = import.meta.env.VITE_API_HOST || "http://localhost:8888/TheRedCarpet/Backend";
+    const apiHost =
+      import.meta.env.VITE_API_HOST ||
+      "http://localhost:8888/TheRedCarpet/Backend";
     const response = await fetch(`${apiHost}/API/user/disconnect.php`, {
       method: "POST",
       headers: {
@@ -588,11 +685,16 @@ export const disconnectUser  = async () => {
   }
 };
 
-
-
-export const updateUser  = async (id: string, username: string, email: string, birthdate?: string) => {
+export const updateUser = async (
+  id: string,
+  username: string,
+  email: string,
+  birthdate?: string
+) => {
   try {
-    const apiHost = import.meta.env.VITE_API_HOST || "http://localhost:8888/TheRedCarpet/Backend";
+    const apiHost =
+      import.meta.env.VITE_API_HOST ||
+      "http://localhost:8888/TheRedCarpet/Backend";
     const response = await fetch(`${apiHost}/API/user/update.php`, {
       method: "PATCH",
       headers: {
@@ -625,10 +727,15 @@ export const updateUser  = async (id: string, username: string, email: string, b
   }
 };
 
-
-export const updatePassword = async (id: number, oldPassword: string, newPassword: string) => {
+export const updatePassword = async (
+  id: number,
+  oldPassword: string,
+  newPassword: string
+) => {
   try {
-    const apiHost = import.meta.env.VITE_API_HOST || "http://localhost:8888/TheRedCarpet/Backend";
+    const apiHost =
+      import.meta.env.VITE_API_HOST ||
+      "http://localhost:8888/TheRedCarpet/Backend";
     const response = await fetch(`${apiHost}/API/user/updatePassword.php`, {
       method: "PATCH",
       headers: {
@@ -660,10 +767,11 @@ export const updatePassword = async (id: number, oldPassword: string, newPasswor
   }
 };
 
-
 export const deleteRoom = async (id: number) => {
   try {
-    const apiHost = import.meta.env.VITE_API_HOST || "http://localhost:8888/TheRedCarpet/Backend";
+    const apiHost =
+      import.meta.env.VITE_API_HOST ||
+      "http://localhost:8888/TheRedCarpet/Backend";
     const response = await fetch(`${apiHost}/API/room/deleteRoom.php`, {
       method: "DELETE",
       headers: {
@@ -693,16 +801,22 @@ export const deleteRoom = async (id: number) => {
   }
 };
 
-
 export const getFilterBorough = async (borough: string) => {
   try {
-    const apiHost = import.meta.env.VITE_API_HOST || "http://localhost:8888/TheRedCarpet/Backend";
-    const response = await fetch(`${apiHost}/API/room/filterBorough.php?borough=${encodeURIComponent(borough)}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const apiHost =
+      import.meta.env.VITE_API_HOST ||
+      "http://localhost:8888/TheRedCarpet/Backend";
+    const response = await fetch(
+      `${apiHost}/API/room/filterBorough.php?borough=${encodeURIComponent(
+        borough
+      )}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     const data = await response.json();
 
@@ -723,10 +837,15 @@ export const getFilterBorough = async (borough: string) => {
   }
 };
 
-
-export const newRoom = async (name: string, gauge: number, theaterId: number) => {
+export const newRoom = async (
+  name: string,
+  gauge: number,
+  theaterId: number
+) => {
   try {
-    const apiHost = import.meta.env.VITE_API_HOST || "http://localhost:8888/TheRedCarpet/Backend";
+    const apiHost =
+      import.meta.env.VITE_API_HOST ||
+      "http://localhost:8888/TheRedCarpet/Backend";
     const response = await fetch(`${apiHost}/API/room/newRoom.php`, {
       method: "POST",
       headers: {
@@ -758,11 +877,11 @@ export const newRoom = async (name: string, gauge: number, theaterId: number) =>
   }
 };
 
-
-
 export const deleteRole = async (role: string) => {
   try {
-    const apiHost = import.meta.env.VITE_API_HOST || "http://localhost:8888/TheRedCarpet/Backend";
+    const apiHost =
+      import.meta.env.VITE_API_HOST ||
+      "http://localhost:8888/TheRedCarpet/Backend";
     const response = await fetch(`${apiHost}/API/role/deleteRole.php`, {
       method: "DELETE",
       headers: {
@@ -792,10 +911,15 @@ export const deleteRole = async (role: string) => {
   }
 };
 
-
-export const newRole = async (role: string, artistId: number, spectacleId: number) => {
+export const newRole = async (
+  role: string,
+  artistId: number,
+  spectacleId: number
+) => {
   try {
-    const apiHost = import.meta.env.VITE_API_HOST || "http://localhost:8888/TheRedCarpet/Backend";
+    const apiHost =
+      import.meta.env.VITE_API_HOST ||
+      "http://localhost:8888/TheRedCarpet/Backend";
     const response = await fetch(`${apiHost}/API/role/newRole.php`, {
       method: "POST",
       headers: {
@@ -827,17 +951,20 @@ export const newRole = async (role: string, artistId: number, spectacleId: numbe
   }
 };
 
-
-
 export const getArtistsInCommon = async (entree: string) => {
   try {
-    const apiHost = import.meta.env.VITE_API_HOST || "http://localhost:8888/TheRedCarpet/Backend";
-    const response = await fetch(`${apiHost}/API/ArtistsInCommon?entree=${encodeURIComponent(entree)}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const apiHost =
+      import.meta.env.VITE_API_HOST ||
+      "http://localhost:8888/TheRedCarpet/Backend";
+    const response = await fetch(
+      `${apiHost}/API/ArtistsInCommon?entree=${encodeURIComponent(entree)}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     const data = await response.json();
 
@@ -858,11 +985,11 @@ export const getArtistsInCommon = async (entree: string) => {
   }
 };
 
-
-
 export const deleteArtist = async (id: number) => {
   try {
-    const apiHost = import.meta.env.VITE_API_HOST || "http://localhost:8888/TheRedCarpet/Backend";
+    const apiHost =
+      import.meta.env.VITE_API_HOST ||
+      "http://localhost:8888/TheRedCarpet/Backend";
     const response = await fetch(`${apiHost}/API/Artist/deleteArtist.php`, {
       method: "DELETE",
       headers: {
@@ -892,10 +1019,15 @@ export const deleteArtist = async (id: number) => {
   }
 };
 
-
-export const createArtist = async (firstname: string, lastname: string, biography: string) => {
+export const createArtist = async (
+  firstname: string,
+  lastname: string,
+  biography: string
+) => {
   try {
-    const apiHost = import.meta.env.VITE_API_HOST || "http://localhost:8888/TheRedCarpet/Backend";
+    const apiHost =
+      import.meta.env.VITE_API_HOST ||
+      "http://localhost:8888/TheRedCarpet/Backend";
     const response = await fetch(`${apiHost}/API/Artist/createArtist.php`, {
       method: "POST",
       headers: {
@@ -927,10 +1059,11 @@ export const createArtist = async (firstname: string, lastname: string, biograph
   }
 };
 
-
 export const getArtistsWithThreeRoles = async () => {
   try {
-    const apiHost = import.meta.env.VITE_API_HOST || "http://localhost:8888/TheRedCarpet/Backend";
+    const apiHost =
+      import.meta.env.VITE_API_HOST ||
+      "http://localhost:8888/TheRedCarpet/Backend";
     const response = await fetch(`${apiHost}/API/Artist/threeRoleArtist.php`, {
       method: "GET",
       headers: {
@@ -957,7 +1090,6 @@ export const getArtistsWithThreeRoles = async () => {
   }
 };
 
-
 export const updateSchedule = async (
   spectacleId: number,
   subscriberId: number,
@@ -966,7 +1098,9 @@ export const updateSchedule = async (
   reactions: any
 ) => {
   try {
-    const apiHost = import.meta.env.VITE_API_HOST || "http://localhost:8888/TheRedCarpet/Backend";
+    const apiHost =
+      import.meta.env.VITE_API_HOST ||
+      "http://localhost:8888/TheRedCarpet/Backend";
     const response = await fetch(`${apiHost}/API/schedule/addNote.php`, {
       method: "PUT",
       headers: {
@@ -1000,11 +1134,11 @@ export const updateSchedule = async (
   }
 };
 
-
-
 export const deleteSchedule = async (id: number) => {
   try {
-    const apiHost = import.meta.env.VITE_API_HOST || "http://localhost:8888/TheRedCarpet/Backend";
+    const apiHost =
+      import.meta.env.VITE_API_HOST ||
+      "http://localhost:8888/TheRedCarpet/Backend";
     const response = await fetch(`${apiHost}/API/schedule/deleteSchedule.php`, {
       method: "DELETE",
       headers: {
@@ -1034,9 +1168,6 @@ export const deleteSchedule = async (id: number) => {
   }
 };
 
-
-
-
 export const createSchedule = async (
   date: string,
   booked: boolean,
@@ -1049,7 +1180,9 @@ export const createSchedule = async (
   subscriberId: number
 ) => {
   try {
-    const apiHost = import.meta.env.VITE_API_HOST || "http://localhost:8888/TheRedCarpet/Backend";
+    const apiHost =
+      import.meta.env.VITE_API_HOST ||
+      "http://localhost:8888/TheRedCarpet/Backend";
     const response = await fetch(`${apiHost}/API/schedule/newSchedule.php`, {
       method: "POST",
       headers: {
@@ -1087,11 +1220,11 @@ export const createSchedule = async (
   }
 };
 
-
-
 export const deleteTheatre = async (id: number) => {
   try {
-    const apiHost = import.meta.env.VITE_API_HOST || "http://localhost:8888/TheRedCarpet/Backend";
+    const apiHost =
+      import.meta.env.VITE_API_HOST ||
+      "http://localhost:8888/TheRedCarpet/Backend";
     const response = await fetch(`${apiHost}/API/theatre/deleteTheatre.php`, {
       method: "DELETE",
       headers: {
@@ -1121,8 +1254,6 @@ export const deleteTheatre = async (id: number) => {
   }
 };
 
-
-
 export const newTheatre = async (
   name: string,
   presentation: string,
@@ -1133,7 +1264,9 @@ export const newTheatre = async (
   email: string
 ) => {
   try {
-    const apiHost = import.meta.env.VITE_API_HOST || "http://localhost:8888/TheRedCarpet/Backend";
+    const apiHost =
+      import.meta.env.VITE_API_HOST ||
+      "http://localhost:8888/TheRedCarpet/Backend";
     const response = await fetch(`${apiHost}/API/theatre/newTheatre`, {
       method: "POST",
       headers: {
@@ -1169,21 +1302,30 @@ export const newTheatre = async (
   }
 };
 
-
 export const getScenaristsPerTheatre = async (theatreId: number) => {
   try {
-    const apiHost = import.meta.env.VITE_API_HOST || "http://localhost:8888/TheRedCarpet/Backend";
-    const response = await fetch(`${apiHost}/API/theatre/ScenaristPerTheater.php?theatre=${theatreId}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const apiHost =
+      import.meta.env.VITE_API_HOST ||
+      "http://localhost:8888/TheRedCarpet/Backend";
+    const response = await fetch(
+      `${apiHost}/API/theatre/ScenaristPerTheater.php?theatre=${theatreId}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     const data = await response.json();
 
     if (response.ok) {
-      return { message: data.message, status: data.status, data: data.data, error: false };
+      return {
+        message: data.message,
+        status: data.status,
+        data: data.data,
+        error: false,
+      };
     } else {
       return {
         message: data.message || "Failed to retrieve scenarists.",

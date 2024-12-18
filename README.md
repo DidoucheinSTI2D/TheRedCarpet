@@ -27,3 +27,6 @@ composer dump-autoload
 ```
 
 ## 🎆 Frontend Setup
+
+### 1. Go in `TheRedCarpet/fronted/TheRedCarpte`
+### 2. Run `npm i` then `npm start`
