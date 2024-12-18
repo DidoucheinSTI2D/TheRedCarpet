@@ -12,7 +12,7 @@ export default function Profile() {
   return (
     <LbFade>
       <div className="p-8">
-        <h1 className="text-2xl font-bold mb-6">Profile</h1>
+        <h1 className="text-2xl font-bold mb-6">Personal Data.</h1>
         <div className="space-y-4">
           <div>
             <label className="font-semibold">Username:</label>
@@ -23,10 +23,8 @@ export default function Profile() {
             <p>{user.email}</p>
           </div>
           <div>
-            <label className="font-semibold">Full Name:</label>
-            <p>
-              {user.first_name} {user.last_name}
-            </p>
+            <label className="font-semibold">Birthday:</label>
+            <p>{user.birthdate}</p>
           </div>
         </div>
       </div>

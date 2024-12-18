@@ -1,0 +1,8 @@
+body[style*="overflow: hidden"] {
+  overflow: auto !important;
+  padding-right: 0 !important;
+}
+
+.overflow-guard {
+  padding-right: 0 !important;
+}
